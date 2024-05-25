@@ -2,23 +2,24 @@ import Board from './Board';
 import { useState } from 'react'
 
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
 
-  const [currentMove, setCurrentMove] = useState(0);
+  const [currentMove, setCurrentMove] = useState(0); //keep track of which step the user is currently viewing
+  const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(nextSquares) { //when you click on a square
+    //If you “go back in time” and then make a new move from that point, you only want to keep the history up to that point. 
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares]; // you’re only keeping that portion of the old history.
+
     setHistory(nextHistory);
+    console.log("nextHistory ->", nextHistory)
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext);
   }
   function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
-    setXIsNext(nextMove % 2 === 0);
+    setCurrentMove(nextMove); // changing currentMove
   }
-  const moves = history.map((squares, move) => {
+  const moves = history.map((squares, move) => { //move starts from 0
     let description;
     if (move > 0) {
       description = "Go to move #" + move;
