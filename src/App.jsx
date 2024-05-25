@@ -7,6 +7,7 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0); //keep track of which step the user is currently viewing
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+  const [isAscending, setIsAscending] = useState(true); 
 
   function handlePlay(nextSquares) { //when you click on a square
     //If you “go back in time” and then make a new move from that point, you only want to keep the history up to that point. 
@@ -17,8 +18,11 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
   function jumpTo(nextMove) {
-    setCurrentMove(nextMove); // changing currentMove
+    setCurrentMove(nextMove); 
   }
+  const toggleSort = () => {
+    setIsAscending(!isAscending); 
+  };
   
   const moves = history.map((squares, move) => {
     let description;
@@ -38,6 +42,10 @@ export default function Game() {
     );
   });
   
+  
+  if (!isAscending) {
+    moves.reverse(); 
+  }
 
   return (
     <div className="game">
@@ -45,6 +53,9 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+      <button onClick={toggleSort}>
+          {isAscending ? 'Sort Descending' : 'Sort Ascending'}
+        </button>
         <ol>{moves}</ol>
       </div>
     </div>

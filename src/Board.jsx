@@ -29,8 +29,8 @@ export default function Board({ xIsNext, squares, onPlay }) {
     }
   
 
-  // Generate the board dynamically
-  const size = 3; // Assuming a 3x3 board for a standard tic-tac-toe game
+
+  const size = 3; 
   const board = [];
   for (let row = 0; row < size; row++) {
     const rowSquares = [];
