@@ -19,6 +19,7 @@ export default function Game() {
   function jumpTo(nextMove) {
     setCurrentMove(nextMove); // changing currentMove
   }
+  
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
