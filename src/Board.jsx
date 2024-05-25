@@ -1,7 +1,7 @@
 import Square from "./Square";
 
 
-export default function Board({ xIsNext, squares, onPlay }) {
+export default function Board({ xIsNext, squares, onPlay, winningLine }) {
     // const [xIsNext, setXisNext] = useState(true);
     // const [squares, setSquares] = useState(Array(9).fill(null));
   
@@ -28,8 +28,6 @@ export default function Board({ xIsNext, squares, onPlay }) {
       status = "Next player: " + (xIsNext ? "X" : "O");
     }
   
-
-
   const size = 3; 
   const board = [];
   for (let row = 0; row < size; row++) {
@@ -41,6 +39,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
         key={index}
         value={squares[index]}
         onSquareClick={() => handleClick(index)}
+        highlight={winningLine && winningLine.includes(index)}
         />
     );
     }
@@ -68,8 +67,8 @@ export default function Board({ xIsNext, squares, onPlay }) {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
+        return { winner: squares[a], line: [a, b, c] };
       }
-    }
+    } 
     return null;
   }
